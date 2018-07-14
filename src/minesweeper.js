@@ -1,7 +1,29 @@
 class Board {
   constructor(numberOfRows, numberOfColumns, numberOfBombs){
-
+    this._numberOfBombs = numberOfBombs
+    this._numberOfTiles = numberOfRows * numberOfColumns
+    this._playerBoard = generatePlayerBoard(numberOfRows, numberOfColumns)
+    this._bombBoard = generateBombBoard(numberOfRows, numberOfColumns, numberOfBombs)
   }
+
+  get playerBoard() {
+    return this.playerBoard
+  }
+
+  flipTile(rowIndex, columnIndex) {
+    if (this._playerBoard[rowIndex][columnIndex] !== ' ') {
+      'This tile has already been flipped!'
+      return
+    }else if (this._bombBoard[rowIndex][columnIndex] === 'B') {
+      this._numberOfTiles--
+      this._playerBoard[rowIndex][columnIndex] = 'B'
+    }else {
+      this._numberOfTiles--
+      this._playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(rowIndex, columnIndex)
+    }
+  }
+
+
 }
 
 
