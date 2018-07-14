@@ -1,13 +1,32 @@
+class Game {
+  constructor(numberOfRows, numberOfColumns, numberOfBombs) {
+    this._board = new Board(numberOfRows, numberOfColumns, numberOfBombs)
+  }
+
+  playMove(rowIndex, columnIndex) {
+    this._board.flipTile(rowIndex, columnIndex);
+    if (this._board.playerBoard[rowIndex][columnIndex] === 'B') {
+      console.log('The game is over!');
+      this._board.print()
+    }else if (!this._board.hasSafeTiles()) {
+      console.log('You have won the game! Congratulations!' );
+    }else {
+      console.log('Current Board:');
+      this._board.print()
+    }
+  }
+}
+
 class Board {
-  constructor(numberOfRows, numberOfColumns, numberOfBombs){
+  constructor(numberOfRows, numberOfColumns, numberOfBombs) {
     this._numberOfBombs = numberOfBombs
     this._numberOfTiles = numberOfRows * numberOfColumns
-    this._playerBoard = generatePlayerBoard(numberOfRows, numberOfColumns)
-    this._bombBoard = generateBombBoard(numberOfRows, numberOfColumns, numberOfBombs)
+    this._playerBoard = Board.generatePlayerBoard(numberOfRows, numberOfColumns)
+    this._bombBoard = Board.generateBombBoard(numberOfRows, numberOfColumns, numberOfBombs)
   }
 
   get playerBoard() {
-    return this.playerBoard;
+    return this._playerBoard;
   }
 
   flipTile(rowIndex, columnIndex) {
@@ -19,7 +38,7 @@ class Board {
       this._playerBoard[rowIndex][columnIndex] = 'B'
     }else {
       this._numberOfTiles--
-      this._playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(rowIndex, columnIndex)
+      this._playerBoard[rowIndex][columnIndex] = this.getNumberOfNeighborBombs(rowIndex, columnIndex)
     }
   }
 
@@ -52,12 +71,11 @@ class Board {
   }
 
   hasSafeTiles() {
-    this._numberOfTiles !== this._numberOfBombs;
+    return this._numberOfTiles !== this._numberOfBombs;
   }
 
   print() {
-    let display = this._playerBoard.map(row => row.join(' | ')).join('\n')
-    return display;
+    console.log(this._playerBoard.map(row => row.join(' | ')).join('\n')); 
   }
 
   static generatePlayerBoard(numberOfRows, numberOfColumns) {
@@ -80,7 +98,7 @@ class Board {
       }
       board.push(row)
     }
-    numberOfBombsPlaced = 0;
+    let numberOfBombsPlaced = 0;
     while (numberOfBombsPlaced < numberOfBombs) {
       let randomRowIndex = Math.floor(Math.random() * numberOfRows)
       let randomColumnIndex = Math.floor(Math.random() * numberOfColumns)
@@ -97,16 +115,5 @@ class Board {
 
 
 
-let playerBoard = generatePlayerBoard(3, 4)
-let bombBoard = generateBombBoard(3, 4, 5)
-
-console.log('Player Board:');
-console.log(printBoard(playerBoard));
-
-console.log('Bomb Board:');
-console.log(printBoard(bombBoard));
-
-flipTile(playerBoard, bombBoard, 0, 0)
-
-console.log('Updated Player Board:');
-console.log(printBoard(playerBoard));
+const g = new Game(3, 3, 3);
+g.playMove(0, 0)
