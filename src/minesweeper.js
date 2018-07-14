@@ -7,7 +7,7 @@ class Board {
   }
 
   get playerBoard() {
-    return this.playerBoard
+    return this.playerBoard;
   }
 
   flipTile(rowIndex, columnIndex) {
@@ -51,46 +51,51 @@ class Board {
     return numberOfBombs;
   }
 
-}
-
-
-const generatePlayerBoard = (numberOfRows, numberOfColumns) => {
-  let board = []
-  for (var i = 0; i < numberOfRows; i++) {
-    var row = []
-    for (var j = 0; j < numberOfColumns; j++) {
-      row.push(" ")
-    }
-    board.push(row)
+  hasSafeTiles() {
+    this._numberOfTiles !== this._numberOfBombs;
   }
- return board;
+
+  print() {
+    let display = this._playerBoard.map(row => row.join(' | ')).join('\n')
+    return display;
+  }
+
+  static generatePlayerBoard(numberOfRows, numberOfColumns) {
+    let board = []
+    for (var i = 0; i < numberOfRows; i++) {
+      var row = []
+      for (var j = 0; j < numberOfColumns; j++) {
+        row.push(" ")
+      }
+      board.push(row)
+    }
+    return board;
+  }
+  static generateBombBoard(numberOfRows, numberOfColumns, numberOfBombs) {
+    let board = []
+    for (var i = 0; i < numberOfRows; i++) {
+      let row = []
+      for (var j = 0; j < numberOfColumns; j++) {
+        row.push(" ")
+      }
+      board.push(row)
+    }
+    numberOfBombsPlaced = 0;
+    while (numberOfBombsPlaced < numberOfBombs) {
+      let randomRowIndex = Math.floor(Math.random() * numberOfRows)
+      let randomColumnIndex = Math.floor(Math.random() * numberOfColumns)
+      if (board[randomRowIndex][randomColumnIndex] !== 'B') {
+        board[randomRowIndex][randomColumnIndex] = 'B'
+        numberOfBombsPlaced++
+      }
+    }
+    return board;
+  }
 }
 
-const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
-  let board = []
-  for (var i = 0; i < numberOfRows; i++) {
-    let row = []
-    for (var j = 0; j < numberOfColumns; j++) {
-      row.push(" ")
-    }
-    board.push(row)
-  }
-  numberOfBombsPlaced = 0;
-  while (numberOfBombsPlaced < numberOfBombs) {
-    let randomRowIndex = Math.floor(Math.random() * numberOfRows)
-    let randomColumnIndex = Math.floor(Math.random() * numberOfColumns)
-    if (board[randomRowIndex][randomColumnIndex] !== 'B') {
-      board[randomRowIndex][randomColumnIndex] = 'B'
-      numberOfBombsPlaced++
-    }
-  }
-  return board;
-}
 
-const printBoard = (board) => {
-  let display = board.map(row => row.join(' | ')).join('\n')
-  return display
-}
+
+
 
 let playerBoard = generatePlayerBoard(3, 4)
 let bombBoard = generateBombBoard(3, 4, 5)
