@@ -23,6 +23,33 @@ class Board {
     }
   }
 
+  getNumberOfNeighborBombs(rowIndex, columnIndex) {
+    let neighborOffsets = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, -1],
+      [0, 1],
+      [1, -1],
+      [1, 0],
+      [1, 1]
+    ];
+
+    const numberOfRows = this._bombBoard.length;
+    const numberOfColumns = this._bombBoard[0].length;
+    let numberOfBombs = 0;
+
+    neighborOffsets.forEach((offset) => {
+      const neighborRowIndex = offset[0] + rowIndex;
+      const neighborColumnIndex = offset[1] + columnIndex;
+      if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows && neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns) {
+        if (this._bombBoard[neighborRowIndex][neighborColumnIndex] === 'B') {
+          numberOfBombs++
+        }
+      }
+    });
+    return numberOfBombs;
+  }
 
 }
 
