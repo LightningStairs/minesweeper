@@ -14,9 +14,9 @@ To Play
 1. In the command line, navigate to the lib directory and run `node`
 2. Run `.load game.js` to load the contents of this file
 3. Then create a Game instance and run commands like so: `let game = new Game(3, 3, 3);`
-    * The first property of game is the number of rows
-    * The second property of game is the number of columns
-    * The third property of game is the number of bombs
+    * The first property of `Game` is the number of rows
+    * The second property of `Game` is the number of columns
+    * The third property of `Game` is the number of bombs
 4. Play moves like so: `game.playMove(0, 1);`
     * The first property of `playMove` is the row choice
     * The second property of `playMove` is the column choice
