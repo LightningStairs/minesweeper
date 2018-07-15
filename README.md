@@ -18,4 +18,6 @@ To Play
     * The second property of game is the number of columns
     * The third property of game is the number of bombs
 4. Play moves like so: `game.playMove(0, 1);`
+    * The first property of `playMove` is the row choice
+    * The second property of `playMove` is the column choice
 5. When done run `.exit`
